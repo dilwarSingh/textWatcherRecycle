@@ -62,21 +62,26 @@ public class rcyAdapter extends RecyclerView.Adapter<rcyAdapter.viewHolder> {
                     int postion = getAdapterPosition();
                     String str = editText.getText().toString();
 
-                    if (postion % 2 == 0) {
-                        for (int i = 0; i < list.size(); i++) {
-                            if (i % 2 == 0)
-                                list.get(i).setName(str);
+                    if (getODDorEVEN(postion) == NumberType.EVEN) {
+                        for (int i = 0; i < list.size(); i += 2) {
+                            list.get(i).setName(str);
                         }
-
                     } else {
-                        for (int i = 0; i < list.size(); i++) {
-                            if (i % 2 != 0)
-                                list.get(i).setName(str);
+                        for (int i = 1; i < list.size(); i += 2) {
+                            list.get(i).setName(str);
                         }
                     }
                     notifyDataSetChanged();
                 }
             });
         }
+
+        private NumberType getODDorEVEN(int x) {
+            return ((x & 1) == 0) ? NumberType.EVEN : NumberType.ODD;
+        }
     }
+
+    enum NumberType {ODD, EVEN}
 }
+
+
